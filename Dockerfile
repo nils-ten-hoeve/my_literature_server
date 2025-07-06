@@ -17,31 +17,31 @@
 # Step-by-Step: Deploy Docker App to Render
 # ✅ 1. Push Your Code to GitHub
 # Make sure your project is in a GitHub repository and includes:
-# 
-# Your Dart server code
-# A working Dockerfile
-# If you need help writing the Dockerfile, let me know!
+# * Your Dart server code
+# * A working Dockerfile
 # 
 # ✅ 2. Sign In to Render
-# Go to https://render.com
-# Sign in with your GitHub account
+# * Go to https://render.com
+# * Sign in with your GitHub account
+
 # ✅ 3. Create a New Web Service
-# Click “New +” → “Web Service”
-# Select your GitHub repo
-# Fill in the settings:
-# Name: e.g., my-literature-server
-# Environment: Docker
-# Region: Choose closest to your users
-# Branch: main or whichever branch has your code
-# Dockerfile Path: usually just Dockerfile
-# Start Command: leave blank if your Dockerfile has CMD or ENTRYPOINT
-# Port: set to the port your Dart server listens on (e.g., 8080)
-# Instance Type: choose Free
+# * Click “New +” → “Web Service”
+# * Select your GitHub repo
+# * Fill in the settings:
+# * Name: e.g., my-literature-server
+# * Environment: Docker
+# * Region: Choose closest to your users
+# * Branch: main or whichever branch has your code
+# * Dockerfile Path: usually just Dockerfile
+# * Start Command: leave blank if your Dockerfile has CMD or ENTRYPOINT
+# * Port: set to the port your Dart server listens on (e.g., 8080)
+# * Instance Type: choose Free
+
 # ✅ 4. Deploy
-# Click Create Web Service
-# Render will build your Docker image and deploy it
-# Once deployed, you’ll get a public URL like:
-# https://my-literature-server.onrender.com
+# * Click Create Web Service
+# * Render will build your Docker image and deploy it
+# * Once deployed, you’ll get a public URL like:
+# * https://my-literature-server.onrender.com
 
 FROM dart:stable
 
