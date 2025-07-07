@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:my_literature_server/encryption.dart';
+
 const String urlToLocalMyLiteratureServer = 'http://localhost:8080';
 
 /// using render.com
@@ -30,7 +32,11 @@ Future<String> fetchMyLiteratureText({
 }) async {
   final client = HttpClient();
   try {
-    final uri = Uri.parse('$urlToMyLiteratureServer/?url=$urlToRead');
+    final String encodedUrlToRead = Uri.encodeComponent(
+      encryptString(urlToRead),
+    );
+    final uri = Uri.parse('$urlToMyLiteratureServer/?url=$encodedUrlToRead');
+    print('Getting: $uri');
     final request = await client.getUrl(uri);
     final response = await request.close();
     final contents = await response.transform(SystemEncoding().decoder).join();

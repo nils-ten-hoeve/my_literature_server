@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:my_literature_server/encryption.dart';
 
 /// http://localhost:8080/?url=https://example.com
 void main() async {
@@ -7,9 +8,9 @@ void main() async {
 }
 
 Future<void> myLiteratureService() async {
-   final server = await HttpServer.bind(InternetAddress.anyIPv4, 8080);
-   print('Service running on port:8080');
-  
+  final server = await HttpServer.bind(InternetAddress.anyIPv4, 8080);
+  print('Service running on port:8080');
+
   await for (HttpRequest request in server) {
     request.response.headers.contentType = ContentType.text;
     // request.response.headers.add('Access-Control-Allow-Origin', '*');
@@ -21,12 +22,13 @@ Future<void> myLiteratureService() async {
     // }
     final client = HttpClient();
     try {
-      final uri = request.uri.queryParameters['url'];
-      if (uri == null) {
+      final url = request.uri.queryParameters['url'];
+      if (url == null) {
         request.response.statusCode = HttpStatus.badRequest;
         request.response.write('Missing "url" query parameter.');
       } else {
-        final targetUri = Uri.parse(uri);
+        final String decryptedUrl = decryptString(url);
+        final targetUri = Uri.parse(decryptedUrl);
         final targetRequest = await client.getUrl(targetUri);
         final targetResponse = await targetRequest.close();
         final contents = await targetResponse
@@ -42,4 +44,3 @@ Future<void> myLiteratureService() async {
     client.close();
   }
 }
-
