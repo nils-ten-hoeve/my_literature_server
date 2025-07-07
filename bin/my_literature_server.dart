@@ -13,13 +13,6 @@ Future<void> myLiteratureService() async {
 
   await for (HttpRequest request in server) {
     request.response.headers.contentType = ContentType.text;
-    // request.response.headers.add('Access-Control-Allow-Origin', '*');
-    // request.response.headers.add('Access-Control-Allow-Methods', 'GET, OPTIONS');
-    // request.response.headers.add('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
-    // if (request.method == 'OPTIONS') {
-    //   await request.response.close();
-    //   return;
-    // }
     final client = HttpClient();
     try {
       final url = request.uri.queryParameters['url'];
@@ -34,7 +27,9 @@ Future<void> myLiteratureService() async {
         final contents = await targetResponse
             .transform(SystemEncoding().decoder)
             .join();
-        request.response.write(contents);
+        // Encrypt the contents before sending
+        final encryptedContents = encryptString(contents);
+        request.response.write(encryptedContents);
       }
     } catch (e) {
       request.response.statusCode = HttpStatus.internalServerError;

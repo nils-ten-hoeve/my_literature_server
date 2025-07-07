@@ -20,9 +20,7 @@ Future<void> main(List<String> args) async {
 
 /// Contains a HttpClient that gets text from [myLiteratureService]
 /// by opening http://localhost:8080/?url=https://example.com
-
-/// and returning the response
-///
+/// and returning the response.
 /// * [urlToMyLiteratureServer] e.g.: http://localhost:8080/?url=https://example.com
 ///   or https://my-literature-server.onrender.com/?url=https://example.com
 /// * [urlToRead] e.g.: https://example.com
@@ -40,7 +38,9 @@ Future<String> fetchMyLiteratureText({
     final request = await client.getUrl(uri);
     final response = await request.close();
     final contents = await response.transform(SystemEncoding().decoder).join();
-    return contents;
+    // Decrypt the received contents
+    final decryptedContents = decryptString(contents);
+    return decryptedContents;
   } catch (e) {
     rethrow;
   } finally {
